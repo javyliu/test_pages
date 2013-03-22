@@ -1,0 +1,34 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	
+		<title>test transition</title>
+		<style type="text/css" media="">
+			body{padding:0;margin:0;}
+			.tsf{
+				width:100px;height:100px;
+				position:absolute;
+				top:0;
+				background-color:red;
+				left:0;
+				-webkit-transform:rotate(7200deg);
+				-webkit-transition:-webkit-transform 1s linear,left 1s linear;}
+			.tsf:hover{background:green;
+				-webkit-transform:rotate(45deg);
+				-webkit-transform-origin:left bottom;
+				left:100%;
+			}
+			.bggreen{background:green;height:100px;margin-top:100px;}
+		</style>
+		
+	</head>
+	<body>
+		<div class="tsf"></div>
+		<div class="bggreen"></div>
+		<iframe src="flip.htm" width="100%" height="500px">
+
+		</iframe>
+		
+	</body>
+</html>

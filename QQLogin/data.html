@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+		<title>new_file</title>
+		<meta name="description" content="" />
+		<meta name="author" content="chunmeng.lu" />
+		<meta name="viewport" content="width=device-width; initial-scale=1.0" />
+		<link rel="shortcut icon" href="/favicon.ico" />
+		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+		<script type="text/javascript" src="http://qzonestyle.gtimg.cn/qzone/openapi/qc.js#appId=100268885" charset="utf-8"></script>
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	</head>
+	<body>
+		<div>
+			<script type="text/javascript">
+			//调用QC.Login方法，指定btnId参数将按钮绑定在容器节点中
+			   QC.Login({}, function(reqData, opts){//登录成功
+			   		QC.Login.getMe(function(openId, accessToken){
+						alert(["当前登录用户的", "openId为："+openId, "accessToken为："+accessToken].join("\n"));
+					});
+					
+					$.post('ajax/test.html', function(data) {
+					    $('.result').html(data);
+					});
+					
+					//从页面收集OpenAPI必要的参数
+					/*
+					var paras = {
+						images:"http://y.photo.qq.com/img?s=OnbP8BwOF&l=y.jpg",
+						title:"#QQ互联JSSDK测试#我是标题啊标题",
+						url:"http://connect.qq.com/",
+						comment:"我是评论：转发原因",
+						summary:"我是摘要：内容说明"  
+					};
+					
+					//用jssdk调用OpenAPI
+					QC.api("add_share", paras)
+						.success(function(s){//请自行改写成功回调
+							alert("分享成功，请到QQ空间内查看！");
+						})
+						.error(function(f){//请自行改写失败回调
+							alert("分享失败！");
+						})
+						.complete(function(c){//请自行改写完成请求回调
+							alert("分享完成！");
+					});
+					*/
+				}, function(opts){//注销成功
+					alert('QQ登录 注销成功');
+				    }
+				);
+		</script>
+		</div>
+	</body>
+</html>

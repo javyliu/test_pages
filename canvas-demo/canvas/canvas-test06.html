@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>canvas-test简单动画</title>
+		<style>
+			body {
+				text-align: center;
+			}
+			canvas {
+				border: 1px solid #000;
+				margin-top: 8%;
+			}
+		</style>
+		<script type="text/javascript" charset="UTF-8">
+			var $ = function(d){
+				return document.querySelector(d);
+			}
+			var canvasTouchAble = function (){
+				var canvas, context, cWidth, cHeight, spriteW, spriteH, image, mouseX, mouseY;
+				var ratio = [4, 4];
+				var step = 8;
+				var ixy = new Array();
+				
+				var init = function(id){
+					canvas = $(id);
+					context = canvas.getContext('2d');
+					cWidth = canvas.width || 600;
+					cHeight = canvas.height || 400;
+					image = new Image();
+					image.src = 'imgs/char1.png';
+					mouseX = 0;
+					mouseY = 0;
+					run();
+					mouseListen();
+				}
+				var run =  function (){
+					image.onload = function (){
+						spriteW = image.width / ratio[0];
+						spriteH = image.height / ratio[1];
+						context.drawImage(image, 0, 0, spriteW, spriteH, 0, 0, spriteW, spriteH);
+					};
+				}
+				 
+				var mouseListen = function (){
+					canvas.addEventListener("mousedown", function (event){
+						if(event.layerX || event.layerX ==0){
+							mouseX = event.layerX;
+							mouseY = event.layerY;
+						}else if (event.offsetX || event.offsetX == 0){
+							mouseX = event.offsetX;
+							mouseY = event.offsetY;
+						}
+						updata();
+					}, false);
+				} 
+
+				var a,b,c,i;	
+				a = b = c = i = 0;
+				var temp = false;
+				var updata = function (){
+					context.clearRect(0, 0, cWidth, cHeight);
+					stepx = mouseX / step;		//画布上x轴的步数
+					stepy = mouseY / step;		//画布上y轴的步数
+					
+					var ix, iy;
+					ix = a * step;
+					iy = c * step;
+					if(ixy.length == 2){
+						if(ix >= ixy[0] && !temp){
+							i = 2;
+							a++;
+						}else if(ix < ixy[0]){
+							i = 3;
+							a--;
+						}
+						if(iy >= ixy[1] && temp){
+							i = 0;
+							c++;
+						}else if(iy < ixy[1]){
+							i = 1;
+							c--;
+						}
+					}else{
+						a++;
+					}
+					if(ix >= mouseX){
+						temp = true;
+					}
+					
+					if(a < 0){
+						a = 0;
+					}
+					// context.beginPath();
+					// context.moveTo(ix, iy);
+					// context.lineTo(iy, mouseX);
+					// context.lineTo(ix, mouseY);
+					// context.stroke();
+					// context.closePath();
+					
+					context.drawImage(image, b * spriteW, i * spriteH, spriteW, spriteH, ix, iy, spriteW, spriteH);
+					ixy.splice(0, 2);
+					ixy.push(ix, iy);
+					if(c >= stepy){
+						ixy.splice(0, 2);
+						temp = false;
+						return;
+					}
+					b = ++b >= 4 ? 0 : b;
+					setTimeout(updata, 180);
+				};
+				return init;				
+			}();
+		
+			onload = function () {
+				new canvasTouchAble("#myCanvas");
+			}
+			document.addEventListener("load", onload, false);
+		</script>
+	</head>
+	<body>
+		<div>
+			<div>
+				<canvas id="myCanvas" width="800" height="400">
+					亲，你的浏览器不支持哦！换成chrome试试！
+				</canvas>
+			</div>
+		</div>
+	</body>
+</html>

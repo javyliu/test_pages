@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>canvas-test像素操作</title>
+	</head>
+	<body>
+		<div>
+			<div>
+				<pre>
+					2D Context API 提供了三个方法用于像素级操作：
+					createImageData
+					getImageData
+					putImageData
+				</pre>
+				<canvas id="myCanvas" width="600" height="600">
+					亲，你的浏览器不支持哦！换成chrome试试！
+				</canvas>
+			</div>
+		</div>
+		<script type="text/javascript" charset="UTF-8">
+			var canvas = document.getElementById('myCanvas');	//获取画布
+			if(canvas && canvas.getContext){
+				var context = canvas.getContext('2d');			//获取画布上下文（铺上2d的画纸）
+				if(context){
+					var imgd = context.createImageData(50,50);
+					var pix = imgd.data;
+					 
+					// Loop over each pixel 和 set a transparent red.
+					for (var i = 0; n = pix.length, i < n; i += 4) {
+					  pix[i  ] = 255; // red channel
+					  pix[i+3] = 127; // alpha channel
+					}
+					 
+					// Draw the ImageData object at the given (x,y) coordinates.
+					context.putImageData(imgd, 0,0);
+					
+					var img = new Image();
+					img.src = "images/logo-icon.png";
+					
+					img.onload = function(){
+						context.drawImage(img, 100, 100);
+
+						var imgdata = context.getImageData(100, 100, 100 + img.width, 100 + img.height);
+						var pixd = imgdata.data;
+						
+						for (var i=0; n = pixd.length, i < n; i +=4) {
+							pixd[i]   = 255 - pixd[i];   //red
+							pixd[i+1] = 255 - pixd[i+1]; //grren
+							pixd[i+2] = 255 - pixd[i+2]; //blue
+							pixd[i+3] = 100;
+						};
+						context.putImageData(imgdata, 100, 100);
+						
+						context.save();
+						
+						context.fillStyle = "rgba(0, 0, 0, 0.6)";
+						context.fillRect(100, 100, 100 + img.width, 100 + img.height);
+					};				
+				}	
+			}					
+		</script>
+	</body>
+</html>

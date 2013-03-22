@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>canvas-test曲线篇</title>
+	</head>
+	<body>
+		<div>
+			<div>
+				<canvas id="myCanvas" width="600" height="600">
+					亲，你的浏览器不支持哦！换成chrome试试！
+				</canvas>
+			</div>
+		</div>
+		<script type="text/javascript" charset="UTF-8">
+			var canvas = document.getElementById('myCanvas');	//获取画布
+			if(canvas && canvas.getContext){
+				var context = canvas.getContext('2d');			//获取画布上下文（铺上2d的画纸）
+				if(context){
+					context.strokeStyle = "#0F0";
+					context.lineWidth = 1;						//设置画笔的粗细
+					
+					//绘制贝塞尔曲线
+					context.moveTo(200, 200);
+					context.quadraticCurveTo(300, 100, 400, 200); //设置基准点坐标和终点坐标
+					context.stroke();
+					
+					//三次贝塞尔曲线
+					context.moveTo(400,400);
+					context.bezierCurveTo(400,250,450,450,600,600);//设置两个基准点坐标和终点坐标
+					context.stroke();
+				}	
+			}					
+		</script>
+	</body>
+</html>

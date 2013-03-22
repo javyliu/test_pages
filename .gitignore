@@ -1,0 +1,7 @@
+#ignore svn
+.svn/
+*.swp
+*.swo
+*.swn
+*.swm
+*.swl

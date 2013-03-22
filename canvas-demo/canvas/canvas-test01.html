@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>canvas-test 基础篇</title>
+	</head>
+	<body>
+		<div>
+			<div>
+				<canvas id="myCanvas" width="400" height="400">
+					亲，你的浏览器不支持哦！换成chrome试试！
+				</canvas>
+			</div>
+		</div>
+		<script type="text/javascript" charset="UTF-8">
+			var canvas = document.getElementById('myCanvas');	//获取画布
+			if(canvas && canvas.getContext){
+				var context = canvas.getContext('2d');			//获取画布上下文（铺上2d的画纸）
+				if(context){
+					context.fillStyle = "rgba(0, 0, 0, 0.4)";	//rgba颜色
+					context.strokeStyle = "#0F0";
+					context.lineWidth = 1;						//设置画笔的粗细
+					
+					//绘制文字
+					context.font = 'normal  30px sans-serif';   //字体设置
+  					context.textBaseline = 'top';  				//相对于画布垂直对齐。
+  					//textBaseline参数：top, hanging, middle, alphabetic, ideographic, and bottom
+ 
+  					context.fillText  ('你好！', 200, 0); //填充出来的文字
+  					context.font = 'bold 30px sans-serif';
+  					context.strokeText('你好啊！', 200, 50);    //描边出来的文字（空心） 
+					
+					//绘制矩形
+					context.fillRect(0, 0, 100, 100);			//填充矩形
+					context.strokeRect(110, 110, 200, 200);		//划矩形
+					context.clearRect(80, 80, 150, 150);		//清除区域
+					context.strokeRect(80, 80, 150, 150);
+					
+					//绘制圆
+					context.beginPath();
+					context.arc(150, 150, 8, 0, Math.PI*2, true);  
+					context.closePath();
+					context.fill();
+					
+					//绘制路径
+					context.beginPath();						//预备
+					context.moveTo(0, 120); 					//开始
+					context.lineTo(0, 220);						//继续
+					context.lineTo(100, 220);					
+					context.lineTo(0, 120);
+					 
+					context.fill(); 							//填充区域的色彩
+					context.stroke();							//勾勒出路径
+					context.closePath();						//gameOver
+					
+					//绘制图片
+					var image = new Image();					//还有这对象真不知道
+					image.src = "images/logo-icon.png";			//指定src
+					image.onload=function(){					//图片加载今天才知道有这些方法
+						context.drawImage(image, 200, 200);		//图片左上角坐（标画出的图片为原图的尺寸）
+						context.drawImage(image, 0, 0, 50, 50); //图片的左上角 和 右下角坐标 （图片会被缩放）
+						//前面4个数是截取图片      后四个是   图片绘制到canvas的位置						
+						context.drawImage(image, 20, 20 , 40, 40, 40, 40, 80, 80);    
+					}
+				}	
+			}					
+		</script>
+	</body>
+</html>

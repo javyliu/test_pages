@@ -1,0 +1,34 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+		<title>QQlogin</title>
+		<meta name="description" content="" />
+		<meta name="author" content="chunmeng.lu" />
+		<meta name="viewport" content="width=device-width; initial-scale=1.0" />
+		<link rel="shortcut icon" href="/favicon.ico" />
+		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+		<script type="text/javascript" src="http://qzonestyle.gtimg.cn/qzone/openapi/qc.js#appId=100268885" charset="utf-8"></script>
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	</head>
+	<body>
+		<div>
+			<p>登陆页面</p>
+			<span id="qqLoginBtn"></span>
+			<script type="text/javascript">
+				//调用QC.Login方法，指定btnId参数将按钮绑定在容器节点中
+			   QC.Login({
+			       //btnId：插入按钮的节点id，必选
+			       btnId:"qqLoginBtn",	
+			       //用户需要确认的scope授权项，可选，默认all
+			       scope:"all",
+			       //按钮尺寸，可用值[A_XL| A_L| A_M| A_S|  B_M| B_S| C_S]，可选，默认
+			       size: "B_M",
+				   
+				   redirectURI : 'http://y7y7.cn/QQLogin/data.html'
+			   })
+			</script>
+		</div>
+	</body>
+</html>

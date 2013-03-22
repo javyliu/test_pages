@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>canvas-test简单动画</title>
+		<style>
+			body {
+				background-color: rgba(0, 0, 0, 0.2);
+			}
+		</style>
+	</head>
+	<body>
+		<div>
+			<div>
+				<canvas id="myCanvas" width="600" height="400">
+					亲，你的浏览器不支持哦！换成chrome试试！
+				</canvas>
+			</div>
+		</div>
+		<script type="text/javascript" charset="UTF-8">
+			var canvas = document.getElementById('myCanvas');	//获取画布
+			if(canvas && canvas.getContext){
+				var context = canvas.getContext('2d');			//获取画布上下文（铺上2d的画纸）
+				if(context){
+					var image1 = new Image()
+					image1.src = "imgs/char1.png";
+					var temp = 0;
+					var tempaa = 0;
+					image1.onload = function(){
+						context.drawImage(image1, 0, 110, 40, 50, 0, 200, 40, 50);
+
+						//context.drawImage(image1, 40, 110, 40, 50, 200, 200, 40, 50);
+						//context.drawImage(image1, 80, 110, 40, 50, 200, 200, 40, 50);
+						//context.drawImage(image1, 120, 110, 40, 50, 200, 200, 40, 50);
+						
+						temp++;
+						tempaa++;
+						setTimeout(updata, 180);
+					};	
+					var tt = 40;
+					var aa = 8;
+					var updata = function(){
+						context.clearRect(0, 0, canvas.width, canvas.height);
+						
+						context.drawImage(image1, tt * temp, 110, 40, 50, tempaa * aa, 200, 40, 50);
+						
+						temp++;
+						tempaa++;
+						if(temp >= 4){
+							temp=0;
+						}
+						if(tempaa >= canvas.width / aa){
+							tempaa=0;
+						}
+						setTimeout(updata, 180);
+					};				
+				}	
+			}					
+		</script>
+	</body>
+</html>

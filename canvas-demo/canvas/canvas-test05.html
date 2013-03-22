@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>canvas-test简单动画</title>
+		<style>
+			canvas {
+				border: 2px solid #000000;
+				background-color: rgba(0, 0, 0, 0.2);
+			}
+		</style>
+	</head>
+	<body>
+		<div>
+			<div>
+				<canvas id="myCanvas" width="800" height="400">
+					亲，你的浏览器不支持哦！换成chrome试试！
+				</canvas>
+			</div>
+		</div>
+		<script type="text/javascript" charset="UTF-8">
+			var canvas = document.getElementById('myCanvas');	//获取画布
+			if(canvas && canvas.getContext){
+				var context = canvas.getContext('2d');			//获取画布上下文（铺上2d的画纸）
+				if(context){
+					var image = new Image()
+					image.src = "imgs/char1.png";
+					var  ratio = [4, 4];						//图片上的任务排列  width:4  heigth:4 
+					var path = [2, 0, 1, 3];					//在图片上的运动轨迹
+					
+					var step = 8;								//步子一步的距离
+					
+					var i  = 0;
+					var aa = 0;
+					var bb = 0;
+					var cc = 0;    //控制y
+					
+					image.onload = function(){
+						tempx = image.width / ratio[0];
+						tempy = image.height / ratio[1];
+						stepx = canvas.width / step;		//画布上x轴的步数
+						stepy = canvas.height / step;		//画布上y轴的步数
+						
+						
+						context.drawImage(image, aa * tempx, path[i] * tempy, tempx, tempy, bb * step, cc * step, tempx, tempy);
+						
+						console.debug(aa * tempx +"\t"+ path[i] * tempy +"\t"+ tempx +"\t"+ tempy+"\t"+ bb * step+"\t"+ cc * step+"\t"+ tempx+"\t"+ tempy);
+						
+						aa++;
+						bb++;
+						setTimeout(updata, 180);
+					};	
+					
+					var temp = false;
+					var updata = function(){
+						context.clearRect(0, 0, canvas.width, canvas.height);
+						
+						//context.drawImage(image1, 40, 110, 40, 50, 200, 200, 40, 50);
+						context.drawImage(image, aa * tempx, path[i] * tempy, tempx, tempy, bb * step, cc * step, tempx, tempy);
+						
+						if(bb % 10 == 0){
+							console.debug(aa * tempx +"\t"+ path[i] * tempy +"\t"+ tempx +"\t"+ tempy+"\t"+ bb * step+"\t"+ cc * step+"\t"+ tempx+"\t"+ tempy);
+						}
+						
+						//bb = bb >= stepx ? 0 : bb;
+						
+						if(bb * step >=  canvas.width - tempx || temp){
+							//clearTimeout();
+							i = 1;
+							if(cc * step >=  canvas.height - tempy || temp){
+								temp = true;
+								i = 2;
+								bb--;
+								bb = bb <= 0 ? 0 : bb; 
+							}else{
+								cc++;
+							}
+						}else if(!temp){
+							bb++;
+						}
+						aa++;
+						aa = aa >= ratio[0] ? 0 : aa; 
+						setTimeout(updata, 180);
+					};				
+				}	
+			}					
+		</script>
+	</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8">
+		<title>Slide</title>
+		<style  type="text/css" >
+			#fader{position:relative;overflow:hidden;height:300px;width:500px}
+			#fader li{position:absolute;left:0;top:0;}
+			ul,li{list-style:none;margin:0;padding:0}
+			img{display:block;}
+		</style>
+		<script type="text/javascript" charset="utf-8">
+			var Javy={};
+function H$(id){return document.getElementById(id)}
+function H$$(c,p){return p.getElementsByTagName(c)}
+Javy.fader = function(){
+	return {
+init:function(options){
+		 var wp = H$(options.id),
+			 ul = H$$('ul',wp)[0],
+			 li = this.li = H$$('li',ul);
+		 this.a = options.auto?options.auto:2;
+		 this.index = options.position?options.position:0;
+		 this.l = li.length;
+		 this.cur = this.z = 0;
+		 this.pos(this.index);
+	 },
+auto:function(){
+		 this.li.a = setInterval(new Function('Javy.fader.move(1)'),this.a*1000);
+	 },
+move:function(i){
+		 var n = this.cur+i;
+		 var m = i==1?n==this.l?0:n:n<0?this.l-1:n;
+		 this.pos(m);
+	 },
+pos:function(i){
+		clearInterval(this.li.a);
+		this.z++;
+		this.li[i].style.zIndex = this.z;
+		this.cur = i;
+		this.auto();
+	}
+	}
+}();
+</script>
+	</head>
+	<body>
+
+		<div id="fader">
+			<ul>
+				<li style="z-index: 6; "><img src="http://images.cnblogs.com/cnblogs_com/hongru/264552/o_1.jpg" _mce_src="http://www.cnblogs.com/hongru/1.jpg" alt="我是图片一"></li>
+				<li style="z-index: 7; "><img src="http://images.cnblogs.com/cnblogs_com/hongru/264552/o_2.jpg" _mce_src="http://www.cnblogs.com/hongru/2.jpg" alt="哈哈，图片二"></li>
+				<li style="z-index: 8; "><img src="http://images.cnblogs.com/cnblogs_com/hongru/264552/o_3.jpg" _mce_src="http://www.cnblogs.com/hongru/3.jpg" alt="这是图片三"></li>
+				<li style="z-index: 9; "><img src="http://images.cnblogs.com/cnblogs_com/hongru/264552/o_4.jpg" _mce_src="http://www.cnblogs.com/hongru/4.jpg" alt="哈哈，图片四"></li>
+				<li style="z-index: 5; "><img src="http://images.cnblogs.com/cnblogs_com/hongru/264552/o_5.jpg" _mce_src="http://www.cnblogs.com/hongru/5.jpg" alt="图片五来咯"></li>
+			</ul>
+		</div>
+</script>
+</body>
+</html>
+<script type="text/javascript"> Javy.fader.init({ id:'fader' }); </script>
